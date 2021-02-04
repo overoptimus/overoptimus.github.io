@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>0pt1mus</title>
+  <icon>https://www.gravatar.com/avatar/a25b97298ae21ae7efb19a14a838eea7</icon>
+  <subtitle>不温不火，不急不躁，了解hows背后的whys</subtitle>
+  <link href="https://superj.site/atom.xml" rel="self"/>
+  
+  <link href="https://superj.site/"/>
+  <updated>2021-01-26T13:27:28.955Z</updated>
+  <id>https://superj.site/</id>
+  
+  <author>
+    <name>0pt1mus</name>
+    <email>1040570917@qq.com</email>
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>schtasks /query显示错误：无法加载列资源</title>
+    <link href="https://superj.site/2021/01/26/20210126212422/"/>
+    <id>https://superj.site/2021/01/26/20210126212422/</id>
+    <published>2021-01-26T13:24:22.000Z</published>
+    <updated>2021-01-26T13:27:28.955Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;操作系统：win 7&lt;/p&gt;
+&lt;p&gt;该原因是编码的不支持，通过chcp查看编码，936会导致无法加载列资源，修改为437即可。&lt;/p&gt;
+&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;p</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="小技巧" scheme="https://superj.site/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>wp-攻防世界WEB-supersqli</title>
+    <link href="https://superj.site/2020/07/08/20200708203725/"/>
+    <id>https://superj.site/2020/07/08/20200708203725/</id>
+    <published>2020-07-08T12:37:25.000Z</published>
+    <updated>2020-07-08T13:19:29.836Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;首先先判断注入类型。可以通过输入一些字符串，在判断是否存在注入的同时判断注入类型。&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="CTF" scheme="https://superj.site/tags/CTF/"/>
+    
+    <category term="writeup" scheme="https://superj.site/tags/writeup/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux SUID/SGID介绍及利用</title>
+    <link href="https://superj.site/2020/06/12/20200612172425/"/>
+    <id>https://superj.site/2020/06/12/20200612172425/</id>
+    <published>2020-06-12T09:24:25.000Z</published>
+    <updated>2020-06-14T09:59:20.857Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;0x00-Linux文件属性&quot;&gt;&lt;a href=&quot;#0x00-Linux文件属性&quot; class=&quot;headerlink&quot; title=&quot;0x00 Linux文件属性&quot;&gt;&lt;/a&gt;0x00 Linux文件属性&lt;/h1&gt;&lt;p&gt;通过&lt;code&gt;ls -l&lt;/code&gt;我们</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="提权" scheme="https://superj.site/tags/%E6%8F%90%E6%9D%83/"/>
+    
+    <category term="Linux" scheme="https://superj.site/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>攻击windows异常处理机制SEH</title>
+    <link href="https://superj.site/2020/05/22/20200522211303/"/>
+    <id>https://superj.site/2020/05/22/20200522211303/</id>
+    <published>2020-05-22T13:13:03.000Z</published>
+    <updated>2020-06-15T06:54:25.633Z</updated>
+    
+    
+    <summary type="html">介绍windows异常处理机制中的SEH，详细介绍SEH的工作原理和如何通过栈溢出实现利用SEH来绕过GS。</summary>
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="逆向" scheme="https://superj.site/tags/%E9%80%86%E5%90%91/"/>
+    
+    <category term="windows异常处理" scheme="https://superj.site/tags/windows%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>elf文件的GOT和PLT</title>
+    <link href="https://superj.site/2020/05/06/20200506120302/"/>
+    <id>https://superj.site/2020/05/06/20200506120302/</id>
+    <published>2020-05-06T04:03:02.000Z</published>
+    <updated>2020-05-23T12:46:28.211Z</updated>
+    
+    
+    <summary type="html">elf文件中的GOT表和PLT表的基础知识。</summary>
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="逆向" scheme="https://superj.site/tags/%E9%80%86%E5%90%91/"/>
+    
+    <category term="elf" scheme="https://superj.site/tags/elf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>(wp)攻防世界PWN——guess_num</title>
+    <link href="https://superj.site/2020/04/02/20200402213448/"/>
+    <id>https://superj.site/2020/04/02/20200402213448/</id>
+    <published>2020-04-02T13:34:48.000Z</published>
+    <updated>2020-04-03T03:51:09.128Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;好久没有做PWN题了，今天开始做一下，把之前的东西捡起来，同时对之前有些知识点也有了新的认识，新的理解。&lt;/p&gt;
+&lt;h1 id=&quot;分析&quot;&gt;&lt;a href=&quot;#分析&quot; class=&quot;headerlink&quot; title=&quot;分析&quot;&gt;&lt;/a&gt;分析&lt;/h1&gt;&lt;p&gt;首先将附件下载下来，</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="CTF" scheme="https://superj.site/tags/CTF/"/>
+    
+    <category term="PWN" scheme="https://superj.site/tags/PWN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>(wp)攻防世界MISC功夫再高也怕菜刀</title>
+    <link href="https://superj.site/2020/04/01/20200401231442/"/>
+    <id>https://superj.site/2020/04/01/20200401231442/</id>
+    <published>2020-04-01T15:14:42.000Z</published>
+    <updated>2020-04-01T15:57:40.628Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;攻防世界MISC类新手题的最后一道题，感觉思路啥的有些绕，不过用到的知识点还是很多的，记录一下。&lt;/p&gt;
+&lt;p&gt;这个wp参考网上大佬文章，自己是真的想不出来这种骚操作，还是太菜。&lt;/p&gt;
+&lt;h1 id=&quot;分析&quot;&gt;&lt;a href=&quot;#分析&quot; class=&quot;headerlink</summary>
+      
+    
+    
+    
+    <category term="CTF" scheme="https://superj.site/categories/CTF/"/>
+    
+    
+    <category term="MISC" scheme="https://superj.site/tags/MISC/"/>
+    
+    <category term="攻防世界" scheme="https://superj.site/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>绕过CDN获取真实IP</title>
+    <link href="https://superj.site/2020/03/29/20200329102119/"/>
+    <id>https://superj.site/2020/03/29/20200329102119/</id>
+    <published>2020-03-29T02:21:19.000Z</published>
+    <updated>2020-03-30T03:56:04.043Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;CDN介绍&quot;&gt;&lt;a href=&quot;#CDN介绍&quot; class=&quot;headerlink&quot; title=&quot;CDN介绍&quot;&gt;&lt;/a&gt;CDN介绍&lt;/h1&gt;&lt;p&gt;CDN（Content Delivery Network，即内容分发网络)。CDN是构建在现有网络基础之上的只能虚拟</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="CDN绕过" scheme="https://superj.site/tags/CDN%E7%BB%95%E8%BF%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>(wp)buuctf杂项达芬奇密码</title>
+    <link href="https://superj.site/2020/03/26/20200326003719/"/>
+    <id>https://superj.site/2020/03/26/20200326003719/</id>
+    <published>2020-03-25T16:37:19.000Z</published>
+    <updated>2020-03-25T17:17:28.626Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;buuctf是一个收录了各个比赛的题目的靶场，真的是什么题都有，各种脑洞，稀奇古怪的加密编码类型，甚至还有什么中文电码之类的稀奇古怪。&lt;/p&gt;
+&lt;p&gt;大家有兴趣可以去刷刷，很棒的刷题地方。&lt;/p&gt;
+&lt;h1 id=&quot;解题思路&quot;&gt;&lt;a href=&quot;#解题思路&quot; class=&quot;h</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="杂项" scheme="https://superj.site/tags/%E6%9D%82%E9%A1%B9/"/>
+    
+    <category term="ctf" scheme="https://superj.site/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>护网杯——easy_tornado</title>
+    <link href="https://superj.site/2020/03/24/20200324165054/"/>
+    <id>https://superj.site/2020/03/24/20200324165054/</id>
+    <published>2020-03-24T08:50:54.000Z</published>
+    <updated>2020-07-10T10:46:43.843Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;首先我们打开网页，发现三个链接。&lt;/p&gt;
+&lt;p&gt;&lt;img src= &quot;/img/loading.gif&quot; data-lazy-src=&quot;https://superj.oss-cn-beijing.aliyuncs.com/image-20200324165348081.pn</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="CTF" scheme="https://superj.site/tags/CTF/"/>
+    
+    <category term="Web_wp" scheme="https://superj.site/tags/Web-wp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker的简单使用</title>
+    <link href="https://superj.site/2020/03/23/20200323164259/"/>
+    <id>https://superj.site/2020/03/23/20200323164259/</id>
+    <published>2020-03-23T08:42:59.000Z</published>
+    <updated>2020-03-23T14:05:25.327Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本文所写环境是在mac下，所以其他环境下的安装过程就不在赘述，如有需要，可以自行百度，资源还是不少的。&lt;/p&gt;
+&lt;p&gt;在学习docker之前，建议先熟悉linux下的命令操作和相关的背景知识学习。&lt;/p&gt;
+&lt;h1 id=&quot;Docker概念&quot;&gt;&lt;a href=&quot;#Docker</summary>
+      
+    
+    
+    
+    <category term="docker" scheme="https://superj.site/categories/docker/"/>
+    
+    
+    <category term="docker使用" scheme="https://superj.site/tags/docker%E4%BD%BF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(七)——确保web安全的HTTPS</title>
+    <link href="https://superj.site/2020/03/23/20200323162450/"/>
+    <id>https://superj.site/2020/03/23/20200323162450/</id>
+    <published>2020-03-23T08:24:50.000Z</published>
+    <updated>2020-07-01T13:35:06.432Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;在HTTP协议中有可能存在信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。&lt;/p&gt;
+&lt;h1 id=&quot;HTTP的缺点&quot;&gt;&lt;a href=&quot;#HTTP的缺点&quot; class=&quot;headerlink&quot; title=&quot;HTTP的缺点&quot;&gt;&lt;/a&gt;HTTP的缺</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(六)——HTTP首部</title>
+    <link href="https://superj.site/2020/03/13/20200313221726/"/>
+    <id>https://superj.site/2020/03/13/20200313221726/</id>
+    <published>2020-03-13T14:17:26.000Z</published>
+    <updated>2020-03-13T14:33:09.368Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;HTTP报文首部&quot;&gt;&lt;a href=&quot;#HTTP报文首部&quot; class=&quot;headerlink&quot; title=&quot;HTTP报文首部&quot;&gt;&lt;/a&gt;HTTP报文首部&lt;/h1&gt;&lt;p&gt;在请求中，HTTP报文由方法、URI、HTTP版本、HTTP首部字段等部分构成。&lt;/p&gt;
+&lt;</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(五)——与HTTP协作的Web服务器</title>
+    <link href="https://superj.site/2020/03/13/20200313220856/"/>
+    <id>https://superj.site/2020/03/13/20200313220856/</id>
+    <published>2020-03-13T14:08:56.000Z</published>
+    <updated>2020-03-13T14:33:07.786Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;用单台虚拟机主机事先多个域名&quot;&gt;&lt;a href=&quot;#用单台虚拟机主机事先多个域名&quot; class=&quot;headerlink&quot; title=&quot;用单台虚拟机主机事先多个域名&quot;&gt;&lt;/a&gt;用单台虚拟机主机事先多个域名&lt;/h1&gt;&lt;p&gt;HTTP/1.1规范允许一台HTTP服务器搭</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>攻防世界web进阶upload1</title>
+    <link href="https://superj.site/2020/03/13/20200313214351/"/>
+    <id>https://superj.site/2020/03/13/20200313214351/</id>
+    <published>2020-03-13T13:43:51.000Z</published>
+    <updated>2020-03-23T14:46:45.622Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;打开网站，发现只存在一个选择文件框和一个上传按钮。&lt;/p&gt;
+&lt;p&gt;&lt;img src= &quot;/img/loading.gif&quot; data-lazy-src=&quot;https://superj.oss-cn-beijing.aliyuncs.com/20200313214718.pn</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="CTF" scheme="https://superj.site/tags/CTF/"/>
+    
+    <category term="Web" scheme="https://superj.site/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(四)——返回结果的HTTP状态码</title>
+    <link href="https://superj.site/2020/03/10/20200310152827/"/>
+    <id>https://superj.site/2020/03/10/20200310152827/</id>
+    <published>2020-03-10T07:28:27.000Z</published>
+    <updated>2020-03-10T07:35:40.655Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;HTTP状态码负责表示客户端HTTP请求的返回结果、标记服务器端的处理是否正常、通知出现的错误等工作。&lt;/p&gt;
+&lt;h1 id=&quot;状态码告知从服务器端返回的请求结果&quot;&gt;&lt;a href=&quot;#状态码告知从服务器端返回的请求结果&quot; class=&quot;headerlink&quot; title=</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(三)——HTTP报文内的HTTP信息</title>
+    <link href="https://superj.site/2020/03/09/20200309220109/"/>
+    <id>https://superj.site/2020/03/09/20200309220109/</id>
+    <published>2020-03-09T14:01:09.000Z</published>
+    <updated>2020-03-09T14:11:18.752Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;HTTP通信过程包括从客户端发往服务器端的请求及从服务器端返回客户端的响应。&lt;/p&gt;
+&lt;h1 id=&quot;HTTP报文&quot;&gt;&lt;a href=&quot;#HTTP报文&quot; class=&quot;headerlink&quot; title=&quot;HTTP报文&quot;&gt;&lt;/a&gt;HTTP报文&lt;/h1&gt;&lt;p&gt;用于HTTP协议</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(二)——简单的HTTP协议</title>
+    <link href="https://superj.site/2020/03/09/20200309213940/"/>
+    <id>https://superj.site/2020/03/09/20200309213940/</id>
+    <published>2020-03-09T13:39:40.000Z</published>
+    <updated>2020-03-09T13:56:41.256Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;HTTP协议用于客户端和服务端之间的通信&quot;&gt;&lt;a href=&quot;#HTTP协议用于客户端和服务端之间的通信&quot; class=&quot;headerlink&quot; title=&quot;HTTP协议用于客户端和服务端之间的通信&quot;&gt;&lt;/a&gt;HTTP协议用于客户端和服务端之间的通信&lt;/h1&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP详解(一)——了解Web及网络基础</title>
+    <link href="https://superj.site/2020/03/09/20200309212639/"/>
+    <id>https://superj.site/2020/03/09/20200309212639/</id>
+    <published>2020-03-09T13:26:39.000Z</published>
+    <updated>2020-03-09T13:35:46.652Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;使用HTTP协议访问Web&quot;&gt;&lt;a href=&quot;#使用HTTP协议访问Web&quot; class=&quot;headerlink&quot; title=&quot;使用HTTP协议访问Web&quot;&gt;&lt;/a&gt;使用HTTP协议访问Web&lt;/h1&gt;&lt;p&gt;通过发送请求获取服务器资源的Web浏览器等，都可称为</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
+    
+    <category term="Web基础" scheme="https://superj.site/tags/Web%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hackthebox系列——Fuzzy</title>
+    <link href="https://superj.site/2020/03/01/20200301174951/"/>
+    <id>https://superj.site/2020/03/01/20200301174951/</id>
+    <published>2020-03-01T09:49:51.000Z</published>
+    <updated>2020-03-01T10:32:50.270Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;打开实例后的网站。&lt;/p&gt;
+&lt;img src= &quot;/img/loading.gif&quot; data-lazy-src=&quot;https://superj.oss-cn-beijing.aliyuncs.com/20200301175111.png&quot; style=&quot;zoom:50%;</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="Hack The Box" scheme="https://superj.site/tags/Hack-The-Box/"/>
+    
+    <category term="wfuzz" scheme="https://superj.site/tags/wfuzz/"/>
+    
+  </entry>
+  
+</feed>

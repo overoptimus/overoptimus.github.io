@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>攻防世界PWN新手题——level2 | 0pt1mus</title><meta name="keywords" content="PWN,攻防世界,Reverse"><meta name="author" content="0pt1mus,1040570917@qq.com"><meta name="copyright" content="0pt1mus"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="level20x00首先通过file和checksec分析该题的附件。  判断该文件是32位的ELF文件，只开启了不可执行的保护。 0x01开始进行反汇编，用IDA 32位。 通过左侧的函数窗口发现，只有main、vulnerable_function可用，因此进行分析，两个函数如下图：   通过分析发现，在main函数中首先调用vulnerable_function，在vulnerable_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界PWN新手题——level2">
+<meta property="og:url" content="https://superj.site/2019/12/20/20191220201041/index.html">
+<meta property="og:site_name" content="0pt1mus">
+<meta property="og:description" content="level20x00首先通过file和checksec分析该题的附件。  判断该文件是32位的ELF文件，只开启了不可执行的保护。 0x01开始进行反汇编，用IDA 32位。 通过左侧的函数窗口发现，只有main、vulnerable_function可用，因此进行分析，两个函数如下图：   通过分析发现，在main函数中首先调用vulnerable_function，在vulnerable_">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg">
+<meta property="article:published_time" content="2019-12-20T12:10:41.000Z">
+<meta property="article:modified_time" content="2020-02-04T13:34:50.692Z">
+<meta property="article:author" content="0pt1mus">
+<meta property="article:tag" content="PWN">
+<meta property="article:tag" content="攻防世界">
+<meta property="article:tag" content="Reverse">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg"><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://superj.site/2019/12/20/20191220201041/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?201f98acf0d361713c617c60889b5827";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0pt1mus","link":"链接: ","source":"来源: 0pt1mus","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-02-04 21:34:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="0pt1mus" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/images/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0pt1mus</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">攻防世界PWN新手题——level2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-12-20T12:10:41.000Z" title="发表于 2019-12-20 20:10:41">2019-12-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-02-04T13:34:50.692Z" title="更新于 2020-02-04 21:34:50">2020-02-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/">CTF</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">252</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><a id="more"></a>
+
+<h1 id="level2"><a href="#level2" class="headerlink" title="level2"></a>level2</h1><h2 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h2><p>首先通过file和checksec分析该题的附件。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2019/12/20/20191220201041/Snip20191220_4.png"></p>
+<p>判断该文件是32位的ELF文件，只开启了不可执行的保护。</p>
+<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><p>开始进行反汇编，用IDA 32位。</p>
+<p>通过左侧的函数窗口发现，只有main、vulnerable_function可用，因此进行分析，两个函数如下图：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2019/12/20/20191220201041/Snip20191220_5.png"></p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2019/12/20/20191220201041/Snip20191220_6.png"></p>
+<p>通过分析发现，在main函数中首先调用vulnerable_function，在vulnerable_function中的缓冲区大小为88h，而read函数能够写进缓冲区100h，因此存在栈溢出。</p>
+<p>知道是栈溢出之后就需要找到溢出点：缓冲区大小加上ebp的4个字节后，就是返回地址的位置。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2019/12/20/20191220201041/Snip20191220_9.png"></p>
+<p>发现在ELF文件中存在字符串“/bin/sh”，而且在主函数中最后会再次调用一次system函数，因此判断可以返回最后一次调用的位置。因此构造payload。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&#x27;a&#x27;</span> * <span class="number">0x88</span> + <span class="string">&#x27;a&#x27;</span> * <span class="number">4</span> + p32(<span class="number">0x0804849e</span>) + p32(<span class="number">0x0804a024</span>)</span><br></pre></td></tr></table></figure>
+<p>最后的<code>0x0804a024</code>为<code>/bin/sh</code>的地址。</p>
+<h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><p>最后的exp为：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2019/12/20/20191220201041/Snip20191220_10.png"></p>
+<h2 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h2><p><img src= "/img/loading.gif" data-lazy-src="/2019/12/20/20191220201041/Snip20191220_11.png" alt="image-20191220204140234"></p>
+<p>最后获取到shell，<code>cat flag</code>得到flag。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1040570917@qq.com">0pt1mus</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://superj.site/2019/12/20/20191220201041/">https://superj.site/2019/12/20/20191220201041/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://superj.site" target="_blank">0pt1mus</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/">攻防世界</a><a class="post-meta__tags" href="/tags/Reverse/">Reverse</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/12/21/20191221113323/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">RSA解密</div></div></a></div><div class="next-post pull-right"><a href="/2019/12/18/20191218221857/"><img class="next-cover" data-lazy-src="https://i.loli.net/2021/02/04/yfU6h3tAEcgjdlD.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">攻防世界PWN（level0）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/12/18/20191218221857/" title="攻防世界PWN（level0）"><img class="cover" data-lazy-src="https://i.loli.net/2021/02/04/yfU6h3tAEcgjdlD.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-18</div><div class="title">攻防世界PWN（level0）</div></div></a></div><div><a href="/2020/04/02/20200402213448/" title="(wp)攻防世界PWN——guess_num"><img class="cover" data-lazy-src="https://i.loli.net/2021/02/04/yfU6h3tAEcgjdlD.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-02</div><div class="title">(wp)攻防世界PWN——guess_num</div></div></a></div><div><a href="/2020/04/01/20200401231442/" title="(wp)攻防世界MISC功夫再高也怕菜刀"><img class="cover" data-lazy-src="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-01</div><div class="title">(wp)攻防世界MISC功夫再高也怕菜刀</div></div></a></div><div><a href="/2020/02/09/20200208181201/" title="攻防世界web新手题wp汇总"><img class="cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-02-09</div><div class="title">攻防世界web新手题wp汇总</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zMTYwNi84MTcw"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">0pt1mus</div><div class="author-info__description">文化水平不够可以读，为人处世不同可以学，钱没有可以赚，唯独你的内心必须坚定，你要不断努力，并且相信你自己绝对是一个有价值，值得被尊重和喜欢的人。</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/overoptimus"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/overoptimus" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cj1040570917@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#level2"><span class="toc-number">1.</span> <span class="toc-text">level2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00"><span class="toc-number">1.1.</span> <span class="toc-text">0x00</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01"><span class="toc-number">1.2.</span> <span class="toc-text">0x01</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02"><span class="toc-number">1.3.</span> <span class="toc-text">0x02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03"><span class="toc-number">1.4.</span> <span class="toc-text">0x03</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/01/26/20210126212422/" title="schtasks /query显示错误：无法加载列资源"><img data-lazy-src="https://i.loli.net/2021/02/04/CKxjDgJ8bd7fno5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="schtasks /query显示错误：无法加载列资源"/></a><div class="content"><a class="title" href="/2021/01/26/20210126212422/" title="schtasks /query显示错误：无法加载列资源">schtasks /query显示错误：无法加载列资源</a><time datetime="2021-01-26T13:24:22.000Z" title="发表于 2021-01-26 21:24:22">2021-01-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/07/08/20200708203725/" title="wp-攻防世界WEB-supersqli"><img data-lazy-src="https://i.loli.net/2021/02/04/TrgbARMD6N9jQKp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="wp-攻防世界WEB-supersqli"/></a><div class="content"><a class="title" href="/2020/07/08/20200708203725/" title="wp-攻防世界WEB-supersqli">wp-攻防世界WEB-supersqli</a><time datetime="2020-07-08T12:37:25.000Z" title="发表于 2020-07-08 20:37:25">2020-07-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/06/12/20200612172425/" title="Linux SUID/SGID介绍及利用"><img data-lazy-src="https://i.loli.net/2021/02/04/6bBAayXL3r8mEnM.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux SUID/SGID介绍及利用"/></a><div class="content"><a class="title" href="/2020/06/12/20200612172425/" title="Linux SUID/SGID介绍及利用">Linux SUID/SGID介绍及利用</a><time datetime="2020-06-12T09:24:25.000Z" title="发表于 2020-06-12 17:24:25">2020-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/05/22/20200522211303/" title="攻击windows异常处理机制SEH"><img data-lazy-src="https://i.loli.net/2021/02/04/xOvsNMZ6f8omcpC.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="攻击windows异常处理机制SEH"/></a><div class="content"><a class="title" href="/2020/05/22/20200522211303/" title="攻击windows异常处理机制SEH">攻击windows异常处理机制SEH</a><time datetime="2020-05-22T13:13:03.000Z" title="发表于 2020-05-22 21:13:03">2020-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/05/06/20200506120302/" title="elf文件的GOT和PLT"><img data-lazy-src="https://i.loli.net/2021/02/04/TrgbARMD6N9jQKp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="elf文件的GOT和PLT"/></a><div class="content"><a class="title" href="/2020/05/06/20200506120302/" title="elf文件的GOT和PLT">elf文件的GOT和PLT</a><time datetime="2020-05-06T04:03:02.000Z" title="发表于 2020-05-06 12:03:02">2020-05-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2017 - 2021 By 0pt1mus</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://superj.site/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !true) {
+  if (true) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
