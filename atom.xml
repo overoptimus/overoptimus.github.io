@@ -6,7 +6,7 @@
   <link href="https://superj.site/atom.xml" rel="self"/>
   
   <link href="https://superj.site/"/>
-  <updated>2021-03-22T14:53:42.735Z</updated>
+  <updated>2021-04-17T10:07:54.324Z</updated>
   <id>https://superj.site/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>XSS challenges</title>
+    <link href="https://superj.site/2021/04/15/20210415165336/"/>
+    <id>https://superj.site/2021/04/15/20210415165336/</id>
+    <published>2021-04-15T08:53:36.000Z</published>
+    <updated>2021-04-17T10:07:54.324Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;00-靶场地址&quot;&gt;&lt;a href=&quot;#00-靶场地址&quot; class=&quot;headerlink&quot; title=&quot;00 靶场地址&quot;&gt;&lt;/a&gt;00 靶场地址&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://xss-quiz.int21h.jp/&quot;&gt;http://xss-qu</summary>
+      
+    
+    
+    
+    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="Web安全" scheme="https://superj.site/tags/Web%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>wp-攻防世界WEB-web2</title>
@@ -474,30 +496,6 @@
     <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
     
     <category term="网络基础" scheme="https://superj.site/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HTTP详解(一)——了解Web及网络基础</title>
-    <link href="https://superj.site/2020/03/09/20200309212639/"/>
-    <id>https://superj.site/2020/03/09/20200309212639/</id>
-    <published>2020-03-09T13:26:39.000Z</published>
-    <updated>2020-03-09T13:35:46.652Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;使用HTTP协议访问Web&quot;&gt;&lt;a href=&quot;#使用HTTP协议访问Web&quot; class=&quot;headerlink&quot; title=&quot;使用HTTP协议访问Web&quot;&gt;&lt;/a&gt;使用HTTP协议访问Web&lt;/h1&gt;&lt;p&gt;通过发送请求获取服务器资源的Web浏览器等，都可称为</summary>
-      
-    
-    
-    
-    <category term="网络安全" scheme="https://superj.site/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    
-    
-    <category term="HTTP" scheme="https://superj.site/tags/HTTP/"/>
-    
-    <category term="Web基础" scheme="https://superj.site/tags/Web%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
