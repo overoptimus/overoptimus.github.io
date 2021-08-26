@@ -1,34 +1,42 @@
-<script type="text/javascript">
-    var agent = navigator.userAgent.toLowerCase();
-    function getBrowserInfo() {
-        var regStr_ie = /msie [\d.]+;/gi;
-        var regStr_ff = /firefox\/[\d.]+/gi
-        var regStr_chrome = /chrome\/[\d.]+/gi;
-        var regStr_saf = /safari\/[\d.]+/gi;
-        //IE
-        //Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
-        if (agent.indexOf("msie") > 0) {
-            return agent.match(regStr_ie);
+<html>
+    <head>
+
+    <meta id="hahaha"></meta>
+
+</head>
+    <script type="text/javascript">
+        var agent = navigator.userAgent.toLowerCase();
+        function getBrowserInfo() {
+            var regStr_ie = /msie [\d.]+;/gi;
+            var regStr_ff = /firefox\/[\d.]+/gi
+            var regStr_chrome = /chrome\/[\d.]+/gi;
+            var regStr_saf = /safari\/[\d.]+/gi;
+            //IE
+            //Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+            if (agent.indexOf("msie") > 0) {
+                return agent.match(regStr_ie);
+            }
+
+            //firefox
+            //Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0
+            if (agent.indexOf("firefox") > 0) {
+                return agent.match(regStr_ff);
+            }
+            //Safari
+            if (agent.indexOf("safari") > 0 && agent.indexOf("chrome") < 0) {
+                return agent.match(regStr_saf);
+            }
+            //Chrome
+            //Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36
+            if (agent.indexOf("chrome") > 0) {
+                return agent.match(regStr_chrome);
+            }
         }
 
-        //firefox
-        //Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0
-        if (agent.indexOf("firefox") > 0) {
-            return agent.match(regStr_ff);
-        }
-        //Safari
-        if (agent.indexOf("safari") > 0 && agent.indexOf("chrome") < 0) {
-            return agent.match(regStr_saf);
-        }
-        //Chrome
-        //Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36
-        if (agent.indexOf("chrome") > 0) {
-            return agent.match(regStr_chrome);
-        }
-    }
+        //（2）然后获取版本号
 
-    //（2）然后获取版本号
+        var browser = getBrowserInfo();
+        document.getElementById("hahaha").innerHTML = browser;
 
-    var browser = getBrowserInfo();
-        document.write(browser);
-</script>
+    </script>
+</html>
